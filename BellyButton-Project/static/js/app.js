@@ -16,7 +16,7 @@ function plotData(id) {
         var top_OTUs = (samples.otu_ids.slice(0, 10)).reverse();
 
         //add OTU onto the ids for the labels
-        var finalOTU_id = top_OTUs.map(d => "OTU " + d)
+        var finalOTU_id = top_OTUs.map(d => "OTU " + d);
 
         //get labels for the plot
         var labels = samples.otu_labels.slice(0, 10);
@@ -105,15 +105,18 @@ function pullDemo(id) {
 
 //create function for the gauge chart(
 function drawGauge(id) {
-    // d3.json('./samples.json').then((data) => {
-
+    d3.json('./samples.json').then((data) => {
+        
+        var demoData = data.metadata;
+        var result = demoData.filter(demo=>demo.id.toString()===id)[0];
+        freq = result.wfreq;
         
         var trace1 = {
             domain: { x: [0, 1], y: [0, 1] },
-		    value: 270,
+		    value: freq,
 		    title: { text: "Belly Button Washing Frequency" },
 		    type: "indicator",
-            mode: "gauge+number",
+            mode: "number+delta+gauge",
             gauge: {
                 axis: {range: [null, 9]},
                 steps: [
@@ -136,7 +139,7 @@ function drawGauge(id) {
 
         Plotly.newPlot('gauge', data1, layout);
     
-    // });
+    });
 }
 
 
