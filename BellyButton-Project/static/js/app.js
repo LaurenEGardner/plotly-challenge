@@ -103,10 +103,48 @@ function pullDemo(id) {
     });
 }
 
+//create function for the gauge chart(
+function drawGauge(id) {
+    // d3.json('./samples.json').then((data) => {
+
+        
+        var trace1 = {
+            domain: { x: [0, 1], y: [0, 1] },
+		    value: 270,
+		    title: { text: "Belly Button Washing Frequency" },
+		    type: "indicator",
+            mode: "gauge+number",
+            gauge: {
+                axis: {range: [null, 9]},
+                steps: [
+                    {range: [0-1]},
+                    {range: [1-2]},
+                    {range: [2-3]},
+                    {range: [2-4]},
+                    {range: [4-5]},
+                    {range: [5-6]},
+                    {range: [6-7]},
+                    {range: [7-8]},
+                    {range: [8-9]},
+                ]
+            }
+        };
+
+        var data1 = [trace1];
+
+        var layout = { width:600, height: 500, marging: { t: 0, b: 0 }};
+
+        Plotly.newPlot('gauge', data1, layout);
+    
+    // });
+}
+
+
 //create function for change events
 function optionChanged(id) {
     plotData(id);
     pullDemo(id);
+    drawGauge(id);
 }
 
 //initialize the dropdown
@@ -125,6 +163,7 @@ function init() {
         //call functions for initial displays
         plotData(data.names[0]);
         pullDemo(data.names[0]);
+        drawGauge(data.names[0]);
     });
 }
 
